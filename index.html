@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Puntuación Jogos de Capoeira</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Puntuación del Campeonato</title>
+ <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+ <div class="container">
+  <h1>Puntuación del Campeonato</h1>
+  <form id="scoreForm">
+   <label for="competitor1">Nombre del competidor 1:</label>
+   <input type="text" id="competitor1" name="competitor1" required>
+
+   <label for="competitor2">Nombre del competidor 2:</label>
+   <input type="text" id="competitor2" name="competitor2" required>
+
+   <label for="category">Categoría:</label>
+   <select id="category" name="category" required>
+    <option value="A Femenino">A Femenino</option>
+    <option value="A Masculino">A Masculino</option>
+    <option value="B Femenino">B Femenino</option>
+    <option value="B Masculino">B Masculino</option>
+    <option value="C Femenino">C Femenino</option>
+    <option value="C Masculino">C Masculino</option>
+    <option value="D Femenino">D Femenino</option>
+    <option value="D Masculino">D Masculino</option>
+    <option value="E Mezclado">E Mezclado</option>
+   </select>
+
+   <label for="stage">Fase:</label>
+   <select id="stage" name="stage" required>
+    <option value="Eliminatorias">Eliminatorias</option>
+    <option value="Octavas">Octavas</option>
+    <option value="Semifinales">Semifinales</option>
+    <option value="Finales">Finales</option>
+   </select>
+
+   <h3>Puntuación del JOGO</h3>
+   <label for="score1">Puntuación Juez 1:</label>
+   <input type="number" step="0.1" id="score1" name="score1" required>
+
+   <label for="score2">Puntuación Juez 2:</label>
+   <input type="number" step="0.1" id="score2" name="score2" required>
+
+   <label for="score3">Puntuación Juez 3:</label>
+   <input type="number" step="0.1" id="score3" name="score3" required>
+
+   <h3>Penalización</h3>
+   <label for="penalizedCompetitor">Restar puntos del Competidor:</label>
+   <select id="penalizedCompetitor" name="penalizedCompetitor" required>
+    <option value="competitor1">Competidor 1</option>
+    <option value="competitor2">Competidor 2</option>
+   </select>
+
+   <label for="penalty1">Juez 1:</label>
+   <input type="number" step="0.1" id="penalty1" name="penalty1" required>
+
+   <label for="penalty2">Juez 2:</label>
+   <input type="number" step="0.1" id="penalty2" name="penalty2" required>
+
+   <label for="penalty3">Juez 3:</label>
+   <input type="number" step="0.1" id="penalty3" name="penalty3" required>
+
+   <button type="submit">Añadir Puntuación</button>
+  </form>
+
+  <h2>Tabla de Puntuaciones</h2>
+  <table>
+   <thead>
+    <tr>
+     <th>Categoría</th>
+     <th>Fase</th>
+     <th>Competidor 1</th>
+     <th>Competidor 2</th>
+     <th>Puntos del Juego</th>
+     <th>Competidor Penalizado</th>
+     <th>Puntos Total Comp 1</th>
+     <th>Puntos Total Comp 2</th>
+    </tr>
+   </thead>
+   <tbody id="scoreTableBody">
+    <!-- Las puntuaciones se añadirán aquí -->
+   </tbody>
+  </table>
+ </div>
+ <script src="script.js"></script>
+</body>
+
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
