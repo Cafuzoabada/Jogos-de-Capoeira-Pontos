@@ -69,3 +69,110 @@ td {
  border: 1px solid #ccc;
  text-align: center;
 }
+
+/* ── Secciones ─────────────────────────────────────────────────────────────── */
+.section-card {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.section-card h2 {
+  margin-top: 0;
+}
+
+/* ── Generador de parejas ──────────────────────────────────────────────────── */
+.pg-controls {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 160px;
+}
+
+textarea#competitorList {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* ── Tarjetas de parejas ───────────────────────────────────────────────────── */
+#pairsContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pair-card {
+  background: #fff;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.pair-card.pair-extra {
+  border-color: #e67e22;
+  background: #fff8f0;
+}
+
+.pair-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.pair-num {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.extra-badge {
+  background: #e67e22;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pair-vs {
+  font-size: 17px;
+  margin: 4px 0 8px;
+}
+
+.extra-note {
+  font-size: 13px;
+  color: #a04800;
+  background: #fde8c8;
+  border-radius: 5px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.btn-score {
+  background: #007bff;
+  padding: 7px 14px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
+.btn-score:hover {
+  background: #0056b3;
+}
