@@ -6,6 +6,81 @@ function getSS() {
   return SpreadsheetApp.getActiveSpreadsheet();
 }
 
+// ═══════════════════════════════════════════════════════════
+// SISTEMA DE LICENÇA · JogosCapoeira
+// ═══════════════════════════════════════════════════════════
+var _LS = 'JgC@p26#R0d4!xBz'; // Segredo — não partilhar
+
+// Verifica a licença da planilha atual.
+// A aba CONFIG deve conter uma linha com A="licenca_modo" e B="ativo"
+// e outra com A="licenca_chave" e B="CLIENTID-YYYYMM-CHECKSUM".
+function _verificarLicenca() {
+  var ss  = getSS();
+  var cfg = ss.getSheetByName('CONFIG');
+  if (!cfg) return; // sem aba CONFIG → sem restrição (instalação original)
+
+  var rows  = cfg.getDataRange().getValues();
+  var modo  = '';
+  var chave = '';
+
+  for (var i = 0; i < rows.length; i++) {
+    var label = String(rows[i][0]).trim().toLowerCase();
+    if (label === 'licenca_modo')  modo  = String(rows[i][1] || '').trim().toLowerCase();
+    if (label === 'licenca_chave') chave = String(rows[i][1] || '').trim().toUpperCase();
+  }
+
+  if (modo !== 'ativo') return; // licença não ativada → sem restrição
+
+  if (!chave) throw new Error('⚠ Licença não configurada. Contacte: asociaciondecapoeiraburgos@gmail.com');
+
+  var partes = chave.split('-');
+  if (partes.length !== 3) throw new Error('⚠ Formato de licença inválido.');
+
+  var clientId = partes[0];
+  var expMes   = partes[1]; // YYYYMM
+  var checksum = partes[2]; // 8 chars hex
+
+  if (!/^\d{6}$/.test(expMes)) throw new Error('⚠ Licença inválida.');
+
+  var ano      = parseInt(expMes.substring(0, 4));
+  var mes      = parseInt(expMes.substring(4, 6));
+  var expiraEm = new Date(ano, mes, 0, 23, 59, 59); // último dia do mês
+  if (new Date() > expiraEm) {
+    throw new Error('⚠ Licença expirada (' + mes + '/' + ano + '). Renove: asociaciondecapoeiraburgos@gmail.com');
+  }
+
+  var base     = clientId + expMes + _LS;
+  var hmac     = Utilities.computeHmacSha256Signature(base, _LS);
+  var hex      = hmac.map(function(b) {
+    return ('0' + (b < 0 ? b + 256 : b).toString(16)).slice(-2);
+  }).join('');
+  var esperado = hex.substring(0, 8).toUpperCase();
+
+  if (checksum !== esperado) throw new Error('⚠ Licença inválida. Contacte: asociaciondecapoeiraburgos@gmail.com');
+}
+
+// ── Gerador de chaves (executar no editor do Apps Script, não via API) ──
+// Preenche clientId e expMes, executa e lê o resultado no Logger.
+function gerarChaveLicenca() {
+  var clientId = 'EXEMPLO'; // ID do cliente: letras+números, máx 10 chars
+  var expMes   = '202612';  // Mês de expiração: YYYYMM
+
+  var base     = clientId.toUpperCase() + expMes + _LS;
+  var hmac     = Utilities.computeHmacSha256Signature(base, _LS);
+  var hex      = hmac.map(function(b) {
+    return ('0' + (b < 0 ? b + 256 : b).toString(16)).slice(-2);
+  }).join('');
+  var checksum = hex.substring(0, 8).toUpperCase();
+  var chave    = clientId.toUpperCase() + '-' + expMes + '-' + checksum;
+
+  Logger.log('══════════════════════════');
+  Logger.log('Cliente : ' + clientId.toUpperCase());
+  Logger.log('Expira  : ' + expMes.substring(4) + '/' + expMes.substring(0, 4));
+  Logger.log('Chave   : ' + chave);
+  Logger.log('══════════════════════════');
+  return chave;
+}
+
 // ── Servir páginas web ──────────────────────────────────────
 function doGet(e) {
   if (e.parameter.action) return _apiHandler(e);
@@ -26,6 +101,7 @@ function doGet(e) {
 function _apiHandler(e) {
   var result;
   try {
+    _verificarLicenca();
     switch (e.parameter.action) {
       case 'getJogoActivo':
         result = getJogoActivo(); break;
